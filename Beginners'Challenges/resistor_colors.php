@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function colorCode(string $color): int
 {
     $resistorColors = [
@@ -15,11 +17,7 @@ function colorCode(string $color): int
         'white' => 9
     ];
 
-    foreach($resistorColors as $key => $value){
-        if($key === $color){
-            return $value;
-        }
-    }
+    return $resistorColors[$color];
 }
 
 $colorCodeValue = colorCode('orange');
