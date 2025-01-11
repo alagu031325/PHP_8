@@ -1,13 +1,10 @@
 <?php
 
-$paymentStatus = 2;
+declare(strict_types=1);
 
-//match expressions - returns value - comparisons are strict - no type juggling like in switch 
-$message = match($paymentStatus){
-    //if the value matches the value passed - right side is returned
-    1 => 'Success',
-    2 => 'Pending',
-    default => 'Denied'
-};
+$names = ['Ben', 'Holly', 'Nanny Plum'];
 
-var_dump($message);
+//as keyword to create a reference for each item in the array 
+foreach($names as $key => $name){
+    var_dump($key , $name);
+}
