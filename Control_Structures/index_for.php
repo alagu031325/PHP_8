@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+include_once '../Other_Concepts/navbar.php';
+
 //if we want to execute a particular block of code 'n' times - whereas while loops are not restricted by numbers 
 
 for($initialValue = 1; $initialValue <=10 ; $initialValue++){

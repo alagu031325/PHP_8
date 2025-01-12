@@ -1,5 +1,7 @@
 <?php
 
+include_once '../Other_Concepts/navbar.php';
+
 $paymentStatus = '1';
 
 //switch checks for equality - value can be int/float/string

@@ -1,5 +1,7 @@
 <?php
 
+include_once '../Other_Concepts/navbar.php';
+
 $paymentStatus = 2;
 
 //match expressions - returns value - comparisons are strict - no type juggling like in switch 
