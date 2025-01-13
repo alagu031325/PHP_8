@@ -21,3 +21,11 @@
 ## Scope
 
 - refers to the accessibility of variables based on its location - variables defined outside cannot be accessible inside the function unless specified with global keyword and vice versa
+
+## Pass by value
+
+- Everytime we pass a variable to the function it creates a copy of the variable's value and assigns it in the parameter so when the parameter changes the original value is not reflected
+
+## Pass by reference
+
+- Instead of creating a copy of the variable we have direct access to the passed variable
