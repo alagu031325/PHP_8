@@ -17,8 +17,8 @@ class Utility {
      * 
      */
     public static function printArr(array $array) {
-        if(count($array)){
-            throw new \InvalidArgumentException("Array is empty");
+        if(count($array)<=0){
+            throw new EmptyArrayException();
         }
         echo '<pre>';
         print_r($array);

@@ -23,11 +23,11 @@
 
 ### OOP Principle
 
-- Encapsulation - process of restricting data and methods to a single class - public properties are vulnerable as global variables - mainly achieved through access modifiers
-- Abstraction - idea of hiding complex details from the user - Objects can provide a level of abstraction by defining methods that handle complex actions
-- Inheritance - one class can be derived from another class - implemented using 'extends' keyword - inherited classes should maintain a 'is-a' relationship with the parent class
-- Concrete class is a class where all its method has an implementation
-- Abstract classes - does not have implemented methods or contains partially implemented methods
-- Interfaces - all methods are fully abstract
-- Polymorphism - Object can be represented in multiple forms - so if we have object of type restaurant interface it can either accept A2B Restaurant or C2D Restaurant - so we use interfaces and abstract classes to implement polymorphism
-- Anonymous Classes - classes without name - no new file created for one time use classes - for prototyping classes before implementing the real class - useful for testing purposes to temporarily test classes - they are faster than regular classes since they dont require autoloading
+- **Encapsulation** - process of restricting data and methods to a single class - public properties are vulnerable as global variables - mainly achieved through access modifiers
+- **Abstraction** - idea of hiding complex details from the user - Objects can provide a level of abstraction by defining methods that handle complex actions
+- **Inheritance** - one class can be derived from another class - implemented using 'extends' keyword - inherited classes should maintain a 'is-a' relationship with the parent class
+- _Concrete class_ is a class where all its method has an implementation
+- _Abstract classes_ - does not have implemented methods or contains partially implemented methods
+- _Interfaces_ - all methods are fully abstract
+- **Polymorphism** - Object can be represented in multiple forms - so if we have object of type restaurant interface it can either accept A2B Restaurant or C2D Restaurant - so we use interfaces and abstract classes to implement polymorphism
+- _Anonymous Classes_ - classes without name - no new file created for one time use classes - for prototyping classes before implementing the real class - useful for testing purposes to temporarily test classes - they are faster than regular classes since they dont require autoloading

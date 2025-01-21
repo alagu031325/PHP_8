@@ -20,12 +20,31 @@ spl_autoload_register(function($class){
 });
 
 //used to resolve classes from custom/global namespaces
-use App\{Account, SocialMedia, Utility, ToasterPremium, A2BRestaurant, C2DRestaurant, FoodApp, RestaurantInterface};
+use App\{Account, SocialMedia, Utility, ToasterPremium, A2BRestaurant, C2DRestaurant, EmptyArrayException, FoodApp, RestaurantInterface, CurrentWeek};
+
+$currentWeek = new CurrentWeek();
+
+//iterable type accepts arrays/objects that implement Iterator i/f
+function displayWeek(iterable $iterable){
+    //we can iterate over objects like we do in arrays 
+    foreach($iterable as $key => $value){
+        var_dump($key, $value);
+        echo "<br>";
+    }
+}
+
+displayWeek($currentWeek);
 
 //calls __construct method - we can assign values to properties 
 $nannyPlumAccount = new Account('Nanny Plum',20.45);
 //DateTime predefined class is in global namespace
-new DateTime();
+$timezone = new DateTimeZone("America/Chicago");
+$date = new DateTime("06/07/1956",$timezone);
+//accepts hours and mintues
+$date->setTime(9, 40);
+echo "<pre>";
+var_dump($date->format('F j Y'));
+echo "</pre>";
 
 //method chaining - is useful to call multiple methods from same class but not always necessary when we need to return other values 
 
@@ -45,7 +64,17 @@ echo '<br>';
 var_dump($nannyPlumAccount::$count);
 
 Utility::printArr([34,45,56,67]);
-Utility::printArr([]);
+
+try{
+    Utility::printArr([]);
+} catch (InvalidArgumentException|EmptyArrayException $exception){
+    echo "<br> Custom Exception : {$exception->getMessage()} <br>";
+} catch (\Exception $exception){
+    echo "Generic Exception : {$exception->getMessage()} <br>";
+} finally {
+    //php executes the code within finally block even if an error gets thrown
+    echo "Finally block <br>";
+}
 
 $nannyPlumAccount->setBalance(45);
 var_dump($nannyPlumAccount->getBalance());
