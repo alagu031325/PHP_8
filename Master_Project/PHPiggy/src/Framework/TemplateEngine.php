@@ -6,6 +6,8 @@ namespace Framework;
 
 class TemplateEngine
 {
+    private array $globalTemplateData = [];
+
     public function __construct(private string $basePath)
     {
     }
@@ -14,6 +16,8 @@ class TemplateEngine
     {
         //Extraction works for assosiative array - constants skip duplicate variables
         extract($data, EXTR_SKIP);
+        //doesnt override the existing variables with extract skip argument
+        extract($this->globalTemplateData, EXTR_SKIP);
 
         //to include the buffer after enabling the output_buffering feature in php.ini - prevents php to send contents directly to the browser until all of the php code has finished execution or buffer is closed
         ob_start();
@@ -32,5 +36,10 @@ class TemplateEngine
     public function resolve(string $path)
     {
         return "{$this->basePath}/{$path}";
+    }
+
+    public function addGlobal(string $key, mixed $value)
+    {
+        $this->globalTemplateData[$key] = $value;
     }
 }

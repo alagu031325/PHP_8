@@ -14,3 +14,11 @@
 ### Reflective Programming
 
 - Ability for a program to look at itself and inspect its properties - Our container doesnt know what dependancies are needed by the controller - so it has to look into class to understand what dependancies it needs
+
+### HTTP Status Code
+
+- 1xx - Information
+- 2xx - Success
+- 3xx - Redirection
+- 4xx - Client Error(Errors that occur on the browser)
+- 5xx - Server Error(Errors that occur on the server side)

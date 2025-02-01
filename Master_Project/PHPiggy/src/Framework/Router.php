@@ -53,7 +53,9 @@ class Router
 
             foreach ($this->middlewares as $middleware)
             {
-                $middlewareInstance = new $middleware;
+                $middlewareInstance = $container ?
+                    $container->resolve($middleware) :
+                    new $middleware;
                 //our middleware either expects next middleware to be passed on or the action to be executed next
                 $action = fn() => $middlewareInstance->process($action);
             }
@@ -67,5 +69,6 @@ class Router
     public function addMiddleware(string $middleware)
     {
         $this->middlewares[] = $middleware;
+        //array_unshift($this->middlewares, $middleware);
     }
 }
