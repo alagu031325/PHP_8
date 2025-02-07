@@ -14,7 +14,7 @@ class TemplateEngine
 
     public function render(string $template, array $data = [])
     {
-        //Extraction works for assosiative array - constants skip duplicate variables
+        //Extraction works for assosiative array - constant EXTR_SKIP is used to skip duplicate variables
         extract($data, EXTR_SKIP);
         //doesnt override the existing variables with extract skip argument
         extract($this->globalTemplateData, EXTR_SKIP);
