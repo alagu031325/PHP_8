@@ -2,6 +2,4 @@
 
 Complete PHP 8 Developer Course
 
-# Virtual Host
-
-- creating multiple sites under single server - creating custom domains pointing to our sites
+Master PHPiggy Project - contains an expense tracking application along with base framework code
