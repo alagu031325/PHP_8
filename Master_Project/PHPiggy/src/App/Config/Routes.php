@@ -10,7 +10,8 @@ use App\Controllers\{
     AboutController,
     AuthController,
     TransactionController,
-    ReceiptController
+    ReceiptController,
+    ErrorController
 };
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 
@@ -25,11 +26,12 @@ function registerRoutes(App $app)
     $app->get('/logout', [AuthController::class, 'logout'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
     $app->post('/transaction', [TransactionController::class, 'create'])->add(AuthRequiredMiddleware::class);
-    $app->get('/transaction/{transactionId}', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);;
-    $app->delete('/transaction/{transactionId}', [TransactionController::class, 'delete'])->add(AuthRequiredMiddleware::class);;
-    $app->post('/transaction/{transactionId}', [TransactionController::class, 'edit'])->add(AuthRequiredMiddleware::class);;
-    $app->get('/transaction/{transactionId}/receipt', [ReceiptController::class, 'uploadView'])->add(AuthRequiredMiddleware::class);;
-    $app->post('/transaction/{transactionId}/receipt', [ReceiptController::class, 'upload'])->add(AuthRequiredMiddleware::class);;
-    $app->get('/transaction/{transactionId}/receipt/{receiptId}', [ReceiptController::class, 'download'])->add(AuthRequiredMiddleware::class);;
-    $app->delete('/transaction/{transactionId}/receipt/{receiptId}', [ReceiptController::class, 'delete'])->add(AuthRequiredMiddleware::class);;
+    $app->get('/transaction/{transactionId}', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);
+    $app->delete('/transaction/{transactionId}', [TransactionController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+    $app->post('/transaction/{transactionId}', [TransactionController::class, 'edit'])->add(AuthRequiredMiddleware::class);
+    $app->get('/transaction/{transactionId}/receipt', [ReceiptController::class, 'uploadView'])->add(AuthRequiredMiddleware::class);
+    $app->post('/transaction/{transactionId}/receipt', [ReceiptController::class, 'upload'])->add(AuthRequiredMiddleware::class);
+    $app->get('/transaction/{transactionId}/receipt/{receiptId}', [ReceiptController::class, 'download'])->add(AuthRequiredMiddleware::class);
+    $app->delete('/transaction/{transactionId}/receipt/{receiptId}', [ReceiptController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+    $app->setErrorHandler([ErrorController::class, 'notFound']);
 }
