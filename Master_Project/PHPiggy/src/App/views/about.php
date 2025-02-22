@@ -9,7 +9,7 @@
     <hr />
 
     <!-- Escaping Data -->
-    <p>Escaping Data: <?php echo escape($dangerousData); ?> </p>
+    <p> This is an personal expense tracking application, thanks for viewing </p>
 </section>
 <!-- End Main Content Area -->
 

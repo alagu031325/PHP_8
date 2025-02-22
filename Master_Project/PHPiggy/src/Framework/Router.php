@@ -13,11 +13,16 @@ class Router
     public function add(string $method, string $path, array $controller)
     {
         $path = $this->normalizePath($path);
+
+        $regexPath = preg_replace('#{[^/]+}#', '([^/]+)', $path);
+
         //single route need a few pieces of information
         $this->routes[] = [
             'path' => $path,
             'method' => strtoupper($method),
-            'controller' => $controller
+            'controller' => $controller,
+            'middlewares' => [],
+            'regexPath' => $regexPath
         ];
     }
 
@@ -33,25 +38,35 @@ class Router
     public function dispatch(string $path, string $method, Container $container = null)
     {
         $path = $this->normalizePath($path);
-        $method = strtoupper($method);
+        $method = strtoupper($_POST['_METHOD'] ?? $method);
 
         foreach ($this->routes as $route)
         {
             //if we pass plain value the pattern is an exact match 
             if (
-                !preg_match("#^{$route['path']}$#", $path) ||
+                //Param values holds all the matches 
+                !preg_match("#^{$route['regexPath']}$#", $path, $paramValues) ||
                 $route['method'] !== $method
             )
             {
                 continue;
             }
 
+            //The full path will always be the first item in the array so we are shifting to remove it
+            array_shift($paramValues);
+
+            preg_match_all('#{([^/]+)}#', $route['path'], $paramKeys);
+            $paramKeys = $paramKeys[1];
+            $params = array_combine($paramKeys, $paramValues);
+
             [$class, $function] = $route['controller'];
 
             $controllerInstance = $container ? $container->resolve($class) : new $class;
-            $action = fn() => $controllerInstance->{$function}();
+            $action = fn() => $controllerInstance->{$function}($params);
 
-            foreach ($this->middlewares as $middleware)
+            //we are applying global middlewares to the last - middlewares to the last are executed first
+            $allMiddleware = [...$route['middlewares'], ...$this->middlewares];
+            foreach ($allMiddleware as $middleware)
             {
                 $middlewareInstance = $container ?
                     $container->resolve($middleware) :
@@ -69,6 +84,13 @@ class Router
     public function addMiddleware(string $middleware)
     {
         $this->middlewares[] = $middleware;
-        //array_unshift($this->middlewares, $middleware);
+    }
+
+    //we shouldnt accept instances - because if a middleware is not called then instance remain unused
+    public function addRouteMiddleware(string $middleware)
+    {
+        //adding middleware to last route registered 
+        $lastRouteKey = array_key_last($this->routes);
+        $this->routes[$lastRouteKey]['middlewares'][] = $middleware;
     }
 }

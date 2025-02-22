@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Framework;
 
-use PDO, PDOException;
+use PDO, PDOException, PDOStatement;
 
 class Database
 {
     private PDO $connection;
+    private PDOStatement $stmt;
 
     public function __construct(string $driver, array $config, string $username, string $password)
     {
@@ -21,7 +22,10 @@ class Database
         //creates connection to the database
         try
         {
-            $this->connection = new PDO($dsn, $username, $password);
+            //Default fetch mode settings modifies fetch mode for all queries
+            $this->connection = new PDO($dsn, $username, $password, [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
         }
         catch (PDOException $e)
         {
@@ -29,8 +33,34 @@ class Database
         }
     }
 
-    public function query(string $query)
+    public function query(string $query, array $params = []): Database
     {
-        $this->connection->query($query);
+        $this->stmt = $this->connection->prepare($query);
+
+        $this->stmt->execute($params);
+
+        return $this;
+    }
+
+    public function count()
+    {
+        //fetches a single result from an array - in our case the count
+        return $this->stmt->fetchColumn();
+    }
+
+    public function find()
+    {
+        //returns result from query as an array (fetch mode set in constructor)
+        return $this->stmt->fetch();
+    }
+
+    public function findAll()
+    {
+        return $this->stmt->fetchAll();
+    }
+
+    public function id()
+    {
+        return $this->connection->lastInsertId();
     }
 }
